@@ -23,11 +23,15 @@ import java.util.UUID;
 
 public class ledControl extends ActionBarActivity {
 
-    Button btnOn, btnOff, btnDis;
-    SeekBar brightness, brakes;
-    TextView lumn;
+
+    Button btnOn, btnOff, btnDis, btnOnBrakes, btnOffBrakes;
+    SeekBar brightness, brakes, steering;
+    TextView lumn, brakevalue, steeringvalue;
     String address = null;
+    String values = null;
     private ProgressDialog progress;
+    private ProgressDialog progress2;
+    private ProgressDialog progress3;
     BluetoothAdapter myBluetooth = null;
     BluetoothSocket btSocket = null;
     private boolean isBtConnected = false;
@@ -47,11 +51,14 @@ public class ledControl extends ActionBarActivity {
 
         //call the widgtes
         btnOn = (Button)findViewById(R.id.button2);
-        btnOff = (Button)findViewById(R.id.button3);
+        btnOff = (Button)findViewById(R.id.button5);
         btnDis = (Button)findViewById(R.id.button4);
         brightness = (SeekBar)findViewById(R.id.seekBar);
         brakes = (SeekBar)findViewById(R.id.seekBar2);
+        steering = (SeekBar)findViewById(R.id.seekBar3);
+        steeringvalue = (TextView)findViewById(R.id.steeringvalue);
         lumn = (TextView)findViewById(R.id.lumn);
+        brakevalue = (TextView)findViewById(R.id.brakevalue);
 
         new ConnectBT().execute(); //Call the class to connect
 
@@ -74,27 +81,23 @@ public class ledControl extends ActionBarActivity {
         });
 
         btnDis.setOnClickListener(new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
         {
-            @Override
-            public void onClick(View v)
-            {
-                Disconnect(); //close connection
-            }
-        });
+            Disconnect(); //close connection
+        }
+    });
 
         brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser==true)
-                {
+                if (fromUser == true) {
                     lumn.setText(String.valueOf(progress));
-                    try
-                    {
-                        btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
-                    }
-                    catch (IOException e)
-                    {
-
+                    values = (String.valueOf(progress))+","+(String.valueOf(progress2))+","+(String.valueOf(progress3));
+                    try {
+                        btSocket.getOutputStream().write(values.toString().getBytes());
+                    } catch (IOException e) {
                     }
                 }
             }
@@ -109,6 +112,58 @@ public class ledControl extends ActionBarActivity {
 
             }
         });
+
+        brakes.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar2, int progress3, boolean fromUser) {
+                if (fromUser == true) {
+                    brakevalue.setText(String.valueOf(progress3));
+                    values = (String.valueOf(progress))+","+(String.valueOf(progress2))+","+(String.valueOf(progress3));
+                    try {
+                        btSocket.getOutputStream().write(values.toString().getBytes());
+                    } catch (IOException e) {
+                    }
+
+                    }
+                }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar2) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar2) {
+
+            }
+        });
+
+        steering.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar3, int progress2, boolean fromUser) {
+                if (fromUser == true) {
+                    steeringvalue.setText(String.valueOf(progress2));
+                    values = (String.valueOf(progress))+","+(String.valueOf(progress2))+","+(String.valueOf(progress3));
+                    try {
+                        btSocket.getOutputStream().write(values.toString().getBytes());
+                    } catch (IOException e) {
+                    }
+
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar3) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar3) {
+
+            }
+        });
+
+
     }
 
     private void Disconnect()
@@ -155,6 +210,8 @@ public class ledControl extends ActionBarActivity {
             }
         }
     }
+
+
 
     // fast way to call Toast
     private void msg(String s)
