@@ -91,10 +91,10 @@ public class ledControl extends ActionBarActivity {
 
         brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            public void onProgressChanged(SeekBar seekBar, int progress2, boolean fromUser) {
                 if (fromUser == true) {
-                    lumn.setText(String.valueOf(progress));
-                    values = (String.valueOf(progress))+","+(String.valueOf(progress2))+","+(String.valueOf(progress3));
+                    lumn.setText(String.valueOf(progress2));
+                    values = (String.valueOf(progress))+","+(String.valueOf(progress2))+","+(String.valueOf(progress3))+"#";
                     try {
                         btSocket.getOutputStream().write(values.toString().getBytes());
                     } catch (IOException e) {
@@ -118,7 +118,7 @@ public class ledControl extends ActionBarActivity {
             public void onProgressChanged(SeekBar seekBar2, int progress3, boolean fromUser) {
                 if (fromUser == true) {
                     brakevalue.setText(String.valueOf(progress3));
-                    values = (String.valueOf(progress))+","+(String.valueOf(progress2))+","+(String.valueOf(progress3));
+                    values = (String.valueOf(progress))+","+(String.valueOf(progress2))+","+(String.valueOf(progress3))+"#";
                     try {
                         btSocket.getOutputStream().write(values.toString().getBytes());
                     } catch (IOException e) {
@@ -140,10 +140,10 @@ public class ledControl extends ActionBarActivity {
 
         steering.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar3, int progress2, boolean fromUser) {
+            public void onProgressChanged(SeekBar seekBar3, int progress, boolean fromUser) {
                 if (fromUser == true) {
-                    steeringvalue.setText(String.valueOf(progress2));
-                    values = (String.valueOf(progress))+","+(String.valueOf(progress2))+","+(String.valueOf(progress3));
+                    steeringvalue.setText(String.valueOf(progress));
+                    values = (String.valueOf(progress))+","+(String.valueOf(progress2))+","+(String.valueOf(progress3))+"#";
                     try {
                         btSocket.getOutputStream().write(values.toString().getBytes());
                     } catch (IOException e) {
