@@ -1,6 +1,5 @@
 package com.example.flora.evlab4;
 
-
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,9 +23,9 @@ import java.util.UUID;
 
 public class ledControl extends ActionBarActivity {
 
-    Button btnLeft, btnRight, btnDis;
-    SeekBar speed;
-    TextView carspeed;
+    Button btnOn, btnOff, btnDis;
+    SeekBar brightness, brakes;
+    TextView lumn;
     String address = null;
     private ProgressDialog progress;
     BluetoothAdapter myBluetooth = null;
@@ -47,29 +46,30 @@ public class ledControl extends ActionBarActivity {
         setContentView(R.layout.activity_led_control);
 
         //call the widgtes
-        btnLeft = (Button)findViewById(R.id.button2);
-        btnRight = (Button)findViewById(R.id.button3);
+        btnOn = (Button)findViewById(R.id.button2);
+        btnOff = (Button)findViewById(R.id.button3);
         btnDis = (Button)findViewById(R.id.button4);
-        speed = (SeekBar)findViewById(R.id.seekBar);
-        carspeed = (TextView)findViewById(R.id.carspeed);
+        brightness = (SeekBar)findViewById(R.id.seekBar);
+        brakes = (SeekBar)findViewById(R.id.seekBar2);
+        lumn = (TextView)findViewById(R.id.lumn);
 
         new ConnectBT().execute(); //Call the class to connect
 
         //commands to be sent to bluetooth
-        btnLeft.setOnClickListener(new View.OnClickListener()
+        btnOn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                turnLeft();      //method to turn on
+                turnOnLed();      //method to turn on
             }
         });
 
-        btnRight.setOnClickListener(new View.OnClickListener() {
+        btnOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                turnRight();   //method to turn off
+                turnOffLed();   //method to turn off
             }
         });
 
@@ -82,12 +82,12 @@ public class ledControl extends ActionBarActivity {
             }
         });
 
-        speed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser==true)
                 {
-                    carspeed.setText(String.valueOf(progress));
+                    lumn.setText(String.valueOf(progress));
                     try
                     {
                         btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
@@ -126,13 +126,13 @@ public class ledControl extends ActionBarActivity {
 
     }
 
-    private void turnRight()
+    private void turnOffLed()
     {
         if (btSocket!=null)
         {
             try
             {
-                btSocket.getOutputStream().write("TR".toString().getBytes());
+                btSocket.getOutputStream().write("TF".toString().getBytes());
             }
             catch (IOException e)
             {
@@ -141,13 +141,13 @@ public class ledControl extends ActionBarActivity {
         }
     }
 
-    private void turnLeft()
+    private void turnOnLed()
     {
         if (btSocket!=null)
         {
             try
             {
-                btSocket.getOutputStream().write("TL".toString().getBytes());
+                btSocket.getOutputStream().write("TO".toString().getBytes());
             }
             catch (IOException e)
             {
