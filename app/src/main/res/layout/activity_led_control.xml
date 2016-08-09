@@ -151,18 +151,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lumn"
+        android:id="@+id/sp"
         android:layout_weight="1" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/brakevalue"
+        android:id="@+id/br"
         android:layout_weight="1" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/steeringvalue"
+        android:id="@+id/st"
         android:layout_weight="1" />
 
     <Button

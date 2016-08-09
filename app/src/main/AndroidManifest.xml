@@ -23,7 +23,7 @@
         <activity
             android:name=".ledControl"
             android:label="EVLab" />
-
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

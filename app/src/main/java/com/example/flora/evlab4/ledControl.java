@@ -23,9 +23,10 @@ import java.util.UUID;
 
 public class ledControl extends ActionBarActivity {
 
-    Button btnOn, btnOff, btnDis;
-    SeekBar brightness, steering, brake;
-    TextView lumn, steeringvalue, brakevalue;
+    Button btnFront, btnBack, btnDis;
+    Boolean sending = false;
+    SeekBar speed, steering, brake;
+    TextView sp, st, br;
     String address = null;
     String value1 = String.valueOf(0);
     String value2 = String.valueOf(0);
@@ -44,26 +45,26 @@ public class ledControl extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         Intent newint = getIntent();
-        address = newint.getStringExtra(DeviceList.EXTRA_ADDRESS); //receive the address of the bluetooth device
+        address = newint.getStringExtra(MainActivity.EXTRA_ADDRESS); //receive the address of the bluetooth device
 
         //view of the ledControl
         setContentView(R.layout.activity_led_control);
 
         //call the widgtes
-        btnOn = (Button)findViewById(R.id.button2);
-        btnOff = (Button)findViewById(R.id.button3);
+        btnFront = (Button)findViewById(R.id.button2);
+        btnBack = (Button)findViewById(R.id.button3);
         btnDis = (Button)findViewById(R.id.button4);
-        brightness = (SeekBar)findViewById(R.id.seekBar);
+        speed = (SeekBar)findViewById(R.id.seekBar);
         steering = (SeekBar)findViewById(R.id.seekBar2);
         brake = (SeekBar)findViewById(R.id.seekBar3);
-        lumn = (TextView)findViewById(R.id.lumn);
-        steeringvalue = (TextView)findViewById(R.id.steeringvalue);
-        brakevalue = (TextView)findViewById(R.id.brakevalue);
+        sp = (TextView)findViewById(R.id.sp);
+        st = (TextView)findViewById(R.id.st);
+        br = (TextView)findViewById(R.id.br);
 
         new ConnectBT().execute(); //Call the class to connect
 
         //commands to be sent to bluetooth
-        btnOn.setOnClickListener(new View.OnClickListener()
+        btnFront.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -72,7 +73,7 @@ public class ledControl extends ActionBarActivity {
             }
         });
 
-        btnOff.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
@@ -96,9 +97,10 @@ public class ledControl extends ActionBarActivity {
             public void onProgressChanged(SeekBar seekBar3, int progress3, boolean fromUser) {
                 if (fromUser==true)
                 {
-                    brakevalue.setText(String.valueOf(progress3));
+                    br.setText(String.valueOf(progress3));
                     value3 = String.valueOf(progress3);
                     addValues();
+
 
                 }
             }
@@ -119,9 +121,10 @@ public class ledControl extends ActionBarActivity {
             public void onProgressChanged(SeekBar seekBar2, int progress2, boolean fromUser) {
                 if (fromUser==true)
                 {
-                    steeringvalue.setText(String.valueOf(progress2));
+                    st.setText(String.valueOf(progress2));
                     value2 = String.valueOf(progress2);
                     addValues();
+
 
                 }
             }
@@ -137,16 +140,17 @@ public class ledControl extends ActionBarActivity {
             }
         });
 
-        brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        speed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress1, boolean fromUser) {
                 if (fromUser==true)
                 {
-                    lumn.setText(String.valueOf(progress1));
+                    sp.setText(String.valueOf(progress1));
                     value1 = String.valueOf(progress1);
                     addValues();
+
 
                 }
             }
@@ -219,6 +223,7 @@ public class ledControl extends ActionBarActivity {
 
             try {
                 btSocket.getOutputStream().write(values.toString().getBytes());
+                btSocket.getOutputStream().flush();
             } catch (IOException e) {
                 msg("Error");
             }
