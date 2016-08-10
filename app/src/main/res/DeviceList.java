@@ -100,7 +100,7 @@ public class DeviceList extends ActionBarActivity
             Intent i = new Intent(DeviceList.this, ledControl.class);
 
             //Change the activity.
-            i.putExtra(EXTRA_ADDRESS, address); //this will be received at ledControl (class) Activity
+            i.putExtra(EXTRA_ADDRESS, address); //this will be received at Sliders (class) Activity
             startActivity(i);
         }
     };

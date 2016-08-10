@@ -1,6 +1,6 @@
 package com.example.flora.evlab4;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,10 +21,10 @@ import java.io.IOException;
 import java.util.UUID;
 
 
-public class ledControl extends ActionBarActivity {
-
+public class Sliders extends Activity {
+    
+    //Variables
     Button btnFront, btnBack, btnDis;
-    Boolean sending = false;
     SeekBar speed, steering, brake;
     TextView sp, st, br;
     String address = null;
@@ -43,12 +43,13 @@ public class ledControl extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
+        
+        //Get address from previous activity
         Intent newint = getIntent();
-        address = newint.getStringExtra(MainActivity.EXTRA_ADDRESS); //receive the address of the bluetooth device
+        address = newint.getStringExtra(MainActivity.EXTRA_ADDRESSA); 
 
-        //view of the ledControl
-        setContentView(R.layout.activity_led_control);
+        //Layout
+        setContentView(R.layout.activity_sliders);
 
         //call the widgtes
         btnFront = (Button)findViewById(R.id.button2);
@@ -61,162 +62,122 @@ public class ledControl extends ActionBarActivity {
         st = (TextView)findViewById(R.id.st);
         br = (TextView)findViewById(R.id.br);
 
-        new ConnectBT().execute(); //Call the class to connect
+        //Connect to Bluetooth
+        new ConnectBT().execute(); 
 
-        //commands to be sent to bluetooth
-        btnFront.setOnClickListener(new View.OnClickListener()
-        {
+        //Front
+        btnFront.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                turnOnLed();      //method to turn on
+            public void onClick(View v) {
+                turnFront();
             }
         });
 
+        //Back
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                turnOffLed();   //method to turn off
+            public void onClick(View v) {
+                turnBack();
             }
         });
 
-        btnDis.setOnClickListener(new View.OnClickListener()
-        {
+        //Disconnect
+        btnDis.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                Disconnect(); //close connection
+            public void onClick(View v) {
+                Disconnect();
             }
         });
 
+        //Brake Control
         brake.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-
             @Override
             public void onProgressChanged(SeekBar seekBar3, int progress3, boolean fromUser) {
-                if (fromUser==true)
-                {
+                if (fromUser==true) {
                     br.setText(String.valueOf(progress3));
                     value3 = String.valueOf(progress3);
                     addValues();
-
-
                 }
             }
-
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar3) {
-
-            }
-
+            public void onStartTrackingTouch(SeekBar seekBar3) {    }
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar3) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar3) {     }
         });
 
+        //Steering Control
         steering.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar2, int progress2, boolean fromUser) {
-                if (fromUser==true)
-                {
+                if (fromUser==true) {
                     st.setText(String.valueOf(progress2));
                     value2 = String.valueOf(progress2);
                     addValues();
-
-
                 }
             }
-
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar2) {
-
-            }
-
+            public void onStartTrackingTouch(SeekBar seekBar2) {    }
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar2) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar2) {    }
         });
 
+        //Speed Control
         speed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress1, boolean fromUser) {
-                if (fromUser==true)
-                {
+                if (fromUser==true) {
                     sp.setText(String.valueOf(progress1));
                     value1 = String.valueOf(progress1);
                     addValues();
-
-
                 }
             }
-
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
+            public void onStartTrackingTouch(SeekBar seekBar) {     }
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {    }
         });
 
 
     }
 
-    private void Disconnect()
-    {
-        if (btSocket!=null) //If the btSocket is busy
-        {
-            try
-            {
-                btSocket.close(); //close connection
+    //Disconnect() to close bluetooth socket
+    private void Disconnect() {
+        if (btSocket!=null) {
+            try {
+                btSocket.close();
             }
             catch (IOException e)
             { msg("Error");}
         }
-        finish(); //return to the first layout
-
+        finish();
     }
 
-    private void turnOffLed()
-    {
-        if (btSocket!=null)
-        {
-            try
-            {
+    //turnBack() to switch relay
+    private void turnBack() {
+        if (btSocket!=null) {
+            try {
                 btSocket.getOutputStream().write("TF".toString().getBytes());
             }
-            catch (IOException e)
-            {
+            catch (IOException e) {
                 msg("Error");
             }
         }
     }
 
-    private void turnOnLed()
-    {
-        if (btSocket!=null)
-        {
-            try
-            {
+    //turnFront() to switch relay
+    private void turnFront() {
+        if (btSocket!=null) {
+            try {
                 btSocket.getOutputStream().write("TO".toString().getBytes());
             }
-            catch (IOException e)
-            {
+            catch (IOException e) {
                 msg("Error");
             }
         }
     }
 
-    private void addValues()
-
-    {
+    //addValues() to send data to Arduino via Bluetooth
+    private void addValues() {
         if (btSocket!=null) {
 
             values = value1+","+value2+","+value3+"#";
@@ -230,27 +191,20 @@ public class ledControl extends ActionBarActivity {
         }
     }
 
-    // fast way to call Toast
-    private void msg(String s)
-    {
+
+    private void msg(String s) {
         Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_led_control, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -258,50 +212,41 @@ public class ledControl extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
-    private class ConnectBT extends AsyncTask<Void, Void, Void>  // UI thread
-    {
-        private boolean ConnectSuccess = true; //if it's here, it's almost connected
+    //class to connect to Bluetooth
+    private class ConnectBT extends AsyncTask<Void, Void, Void> {
+        private boolean ConnectSuccess = true;
 
         @Override
-        protected void onPreExecute()
-        {
-            progress = ProgressDialog.show(ledControl.this, "Connecting...", "Please wait!!!");  //show a progress dialog
+        protected void onPreExecute() {
+            progress = ProgressDialog.show(Sliders.this, "Connecting...", "Please wait!!!");
         }
 
         @Override
-        protected Void doInBackground(Void... devices) //while the progress dialog is shown, the connection is done in background
-        {
-            try
-            {
+        protected Void doInBackground(Void... devices) {
+            try {
                 if (btSocket == null || !isBtConnected)
                 {
-                    myBluetooth = BluetoothAdapter.getDefaultAdapter();//get the mobile bluetooth device
-                    BluetoothDevice dispositivo = myBluetooth.getRemoteDevice(address);//connects to the device's address and checks if it's available
-                    btSocket = dispositivo.createInsecureRfcommSocketToServiceRecord(myUUID);//create a RFCOMM (SPP) connection
+                    myBluetooth = BluetoothAdapter.getDefaultAdapter();
+                    BluetoothDevice dispositivo = myBluetooth.getRemoteDevice(address);
+                    btSocket = dispositivo.createInsecureRfcommSocketToServiceRecord(myUUID);
                     BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
-                    btSocket.connect();//start connection
+                    btSocket.connect();
                 }
             }
-            catch (IOException e)
-            {
-                ConnectSuccess = false;//if the try failed, you can check the exception here
+            catch (IOException e) {
+                ConnectSuccess = false;
             }
             return null;
         }
         @Override
-        protected void onPostExecute(Void result) //after the doInBackground, it checks if everything went fine
-        {
+        protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            if (!ConnectSuccess)
-            {
+            if (!ConnectSuccess) {
                 msg("Connection Failed. Is it a SPP Bluetooth? Try again.");
                 finish();
             }
-            else
-            {
+            else {
                 msg("Connected.");
                 isBtConnected = true;
             }

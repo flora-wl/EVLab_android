@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">EVLab</string>
 
-    <string name="hello_world">Hello world!</string>
+    <integer name="brakeMax">500</integer>
+    <integer name="speedMax">255</integer>
+    <integer name="steeringMax">255</integer>
+    <integer name="brakeMin">0</integer>
+    <integer name="speedMin">0</integer>
+    <integer name="steeringMin">0</integer>
+
     <string name="action_settings">Settings</string>
-    <string name="title_activity_led_control">EVLab</string>
+
     <color name="black">#000000</color>
 
 </resources>

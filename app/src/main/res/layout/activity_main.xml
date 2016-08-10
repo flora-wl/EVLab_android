@@ -9,10 +9,10 @@
 
     <ImageView
         android:orientation="vertical"
-        android:layout_width="274dp"
-        android:layout_height="359dp"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/logo"
+        android:background="@drawable/makerbay"
         />
 
     <TextView
@@ -24,24 +24,42 @@
         android:layout_weight="0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_weight="1"
+        android:weightSum="1"
+        android:layout_gravity="center_horizontal">
+
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonaccel"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Manual"
+        android:text="Accelerometer"
         />
 
     <Button
-        android:id="@+id/buttondigital"
+        android:id="@+id/buttonslider"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Digital"
-        android:onClick="digitalNavigation"
+        android:text="Sliders"
+        android:onClick="Sliders"
         />
+    </LinearLayout>
 
+    <Button
+        android:id="@+id/buttondata"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Data"
+        android:onClick="Data"
+        />
 
 </LinearLayout>
