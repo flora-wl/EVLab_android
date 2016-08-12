@@ -23,15 +23,20 @@ import java.util.UUID;
 
 public class Sliders extends Activity {
     
-    //Variables
+    //Variables and Widgets
     Button btnFront, btnBack, btnDis;
     SeekBar speed, steering, brake;
     TextView sp, st, br;
-    String address = null;
     String value1 = String.valueOf(0);
     String value2 = String.valueOf(0);
     String value3 = String.valueOf(0);
     String values = String.valueOf(0);
+    String valuefull1 = String.valueOf(0);
+    int valuefull = 0;
+
+
+    //Bluetooth setup
+    String address = null;
     private ProgressDialog progress;
     BluetoothAdapter myBluetooth = null;
     BluetoothSocket btSocket = null;
@@ -179,8 +184,10 @@ public class Sliders extends Activity {
     //addValues() to send data to Arduino via Bluetooth
     private void addValues() {
         if (btSocket!=null) {
+            valuefull = Integer.parseInt(value1)+Integer.parseInt(value2)+Integer.parseInt(value3);
+            valuefull1 = String.valueOf(valuefull);
 
-            values = value1+","+value2+","+value3+"#";
+            values = value1+","+value2+","+value3+","+valuefull1+"#";
 
             try {
                 btSocket.getOutputStream().write(values.toString().getBytes());

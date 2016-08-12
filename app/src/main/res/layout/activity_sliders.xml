@@ -6,20 +6,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
->
+    >
 
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="112dp"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:layout_weight="1.24">
-
-    <ImageButton android:id="@+id/home"
-        android:layout_width="50dp"
-        android:layout_height="75dp"
-        android:onClick="joysticClick"
-        android:src="@drawable/menu" />
 
         <View
             android:layout_width="0dp"
@@ -27,34 +21,35 @@
             android:layout_weight="1"
             />
 
-    <ImageView
-        android:id="@+id/ev_design"
-        android:layout_width="125dp"
-        android:layout_height="200dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:contentDescription="@+id/app_name"
-        android:paddingBottom="15dp"
-        android:paddingLeft="15dp"
-        android:src="@drawable/logo2" />
+        <ImageView
+            android:id="@+id/ev_design"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:contentDescription="@+id/app_name"
+            android:src="@drawable/makerbay2" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+
+
 
     </LinearLayout>
 
     <TextView
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:textAppearance="?android:attr/textAppearanceLarge"
-    android:text="Speed"
-    android:id="@+id/textView"
-    android:layout_marginTop="20dp"
-    android:layout_above="@+id/seekBar"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_weight="1" />
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Steering"
+        android:id="@+id/textView"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1" />
 
     <SeekBar
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="5dp"
         android:id="@+id/seekBar"
         android:max="255"
         android:progress="1"
@@ -63,25 +58,26 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="15dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Steering"
+        android:text="Speed"
         android:id="@+id/textView2"
         android:layout_marginTop="20dp"
         android:layout_weight="1" />
 
     <SeekBar
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="5dp"
         android:id="@+id/seekBar2"
         android:max="255"
-        android:progress="1"
+        android:progress="127"
         android:indeterminate="false"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="15dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Brakes"
         android:id="@+id/textView3"
@@ -90,7 +86,7 @@
 
     <SeekBar
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="5dp"
         android:id="@+id/seekBar3"
         android:max="255"
         android:progress="1"
@@ -100,12 +96,10 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
+        android:layout_height="40dp"
         android:layout_weight="1"
         android:weightSum="1"
         android:layout_gravity="center_horizontal">
-
-
 
         <Button
             android:layout_width="171dp"
@@ -113,38 +107,47 @@
             android:text="Front"
             android:id="@+id/button2" />
 
-    <Button
-        android:layout_width="188dp"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:id="@+id/button3" />
+        <Button
+            android:layout_width="188dp"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:id="@+id/button3" />
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sp"
-        android:layout_weight="1" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/br"
-        android:layout_weight="1" />
+    <LinearLayout
+        android:id="@+id/linear_layout3"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:layout_weight="1.24">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/st"
-        android:layout_weight="1" />
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/sp"
+            android:layout_weight="1" />
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/br"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/st"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:text="Disconnect"
         android:id="@+id/button4"
-        android:layout_weight="2.08"
         android:layout_gravity="right" />
 
-
 </LinearLayout>
+

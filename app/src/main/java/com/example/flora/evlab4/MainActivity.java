@@ -10,7 +10,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Variables
     String address = null;
-    public static String EXTRA_ADDRESSA = "device_address"; //PROBLEM?
+    public static String EXTRA_ADDRESSA = "device_address";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +48,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Switch to Data Collection Activity
-        Button switchact3 = (Button) findViewById(R.id.buttondata);
-        switchact3.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                Intent m = new Intent(MainActivity.this, Data.class);
-                m.putExtra(EXTRA_ADDRESSA, address);
-                startActivity(m);
-            }
-        });
     }
 }
